@@ -12,9 +12,4 @@
     <ItemGroup>
         <PackageReference Include="Testcontainers"/>
     </ItemGroup>
-    <ItemGroup>
-        <None Include="ssl/**/*">
-            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-        </None>
-    </ItemGroup>
 </Project>
