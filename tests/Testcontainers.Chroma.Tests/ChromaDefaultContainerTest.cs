@@ -1,19 +1,19 @@
-namespace Testcontainers.Qdrant;
+namespace Testcontainers.Chroma;
 
-public sealed class QdrantDefaultContainerTest : IAsyncLifetime
+public sealed class ChromaDefaultContainerTest : IAsyncLifetime
 {
-    // # --8<-- [start:UseQdrantContainer]
-    private readonly QdrantContainer _qdrantContainer = new QdrantBuilder(TestSession.GetImageFromDockerfile()).Build();
+    // # --8<-- [start:UseChromaContainer]
+    private readonly ChromaContainer _chromaContainer = new ChromaBuilder(TestSession.GetImageFromDockerfile()).Build();
 
     public async ValueTask InitializeAsync()
     {
-        await _qdrantContainer.StartAsync()
+        await _chromaContainer.StartAsync()
             .ConfigureAwait(false);
     }
 
     public ValueTask DisposeAsync()
     {
-        return _qdrantContainer.DisposeAsync();
+        return _chromaContainer.DisposeAsync();
     }
 
     [Fact]
@@ -21,7 +21,7 @@ public sealed class QdrantDefaultContainerTest : IAsyncLifetime
     public async Task HealthReturnsValidResponse()
     {
         // Given
-        using var client = new QdrantClient(new Uri(_qdrantContainer.GetGrpcConnectionString()));
+        using var client = new QdrantClient(new Uri(_chromaContainer.GetGrpcConnectionString()));
 
         // When
         var response = await client.HealthAsync(TestContext.Current.CancellationToken)
@@ -29,9 +29,9 @@ public sealed class QdrantDefaultContainerTest : IAsyncLifetime
 
         // Then
         Assert.NotEmpty(response.Title);
-        Assert.Equal(_qdrantContainer.GetHttpConnectionString(), _qdrantContainer.GetConnectionString());
+        Assert.Equal(_chromaContainer.GetHttpConnectionString(), _chromaContainer.GetConnectionString());
     }
-    // # --8<-- [end:UseQdrantContainer]
+    // # --8<-- [end:UseChromaContainer]
 
     [Fact]
     [Trait(nameof(DockerCli.DockerPlatform), nameof(DockerCli.DockerPlatform.Linux))]
@@ -39,7 +39,7 @@ public sealed class QdrantDefaultContainerTest : IAsyncLifetime
     {
         // Given
         using var httpClient = new HttpClient();
-        httpClient.BaseAddress = new Uri(_qdrantContainer.GetHttpConnectionString());
+        httpClient.BaseAddress = new Uri(_chromaContainer.GetHttpConnectionString());
 
         // When
         using var httpResponse = await httpClient.GetAsync("/", TestContext.Current.CancellationToken)

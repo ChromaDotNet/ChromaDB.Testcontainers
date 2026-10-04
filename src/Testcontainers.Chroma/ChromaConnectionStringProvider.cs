@@ -1,9 +1,9 @@
-namespace Testcontainers.Qdrant;
+namespace Testcontainers.Chroma;
 
 /// <summary>
 /// Provides the Qdrant connection string.
 /// </summary>
-internal sealed class QdrantConnectionStringProvider : ContainerConnectionStringProvider<QdrantContainer, QdrantConfiguration>
+internal sealed class ChromaConnectionStringProvider : ContainerConnectionStringProvider<ChromaContainer, ChromaConfiguration>
 {
     /// <inheritdoc />
     protected override string GetHostConnectionString()

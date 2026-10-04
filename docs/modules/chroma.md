@@ -5,21 +5,21 @@
 Add the following dependency to your project file:
 
 ```shell title="NuGet"
-dotnet add package Testcontainers.Qdrant
+dotnet add package Testcontainers.Chroma
 ```
 
 You can start a Qdrant container instance from any .NET application. This example uses xUnit.net's `IAsyncLifetime` interface to manage the lifecycle of the container. The container is started in the `InitializeAsync` method before the test method runs, ensuring that the environment is ready for testing. After the test completes, the container is removed in the `DisposeAsync` method.
 
 === "Usage Example"
     ```csharp
-    --8<-- "tests/Testcontainers.Qdrant.Tests/QdrantDefaultContainerTest.cs:UseQdrantContainer"
+    --8<-- "tests/Testcontainers.Chroma.Tests/ChromaDefaultContainerTest.cs:UseChromaContainer"
     ```
 
 The test example uses the following NuGet dependencies:
 
 === "Package References"
     ```xml
-    --8<-- "tests/Testcontainers.Qdrant.Tests/Testcontainers.Qdrant.Tests.csproj:PackageReferences"
+    --8<-- "tests/Testcontainers.Chroma.Tests/Testcontainers.Chroma.Tests.csproj:PackageReferences"
     ```
 
 To execute the tests, use the command `dotnet test` from a terminal.
@@ -32,14 +32,14 @@ To set and configure an API key, use the following container builder method:
 
 === "Configure the API Key"
     ```csharp
-    --8<-- "tests/Testcontainers.Qdrant.Tests/QdrantSecureContainerTest.cs:ConfigureQdrantContainerApiKey"
+    --8<-- "tests/Testcontainers.Chroma.Tests/ChromaSecureContainerTest.cs:ConfigureChromaContainerApiKey"
     ```
 
 Make sure the underlying Qdrant HTTP or gRPC client adds the API key to the HTTP header or gRPC metadata:
 
 === "Configure the Qdrant Client"
     ```csharp
-    --8<-- "tests/Testcontainers.Qdrant.Tests/QdrantSecureContainerTest.cs:ConfigureQdrantClientApiKey"
+    --8<-- "tests/Testcontainers.Chroma.Tests/ChromaSecureContainerTest.cs:ConfigureChromaClientApiKey"
     ```
 
 ## Configure TLS
@@ -52,16 +52,16 @@ The following example generates a self-signed certificate and configures the mod
 
 === "Configure the TLS Certificate"
     ```csharp
-    --8<-- "tests/Testcontainers.Qdrant.Tests/QdrantSecureContainerTest.cs:ConfigureQdrantContainerCertificate"
+    --8<-- "tests/Testcontainers.Chroma.Tests/ChromaSecureContainerTest.cs:ConfigureChromaContainerCertificate"
     ```
 
 The Qdrant client is configured to validate the TLS certificate using its thumbprint:
 
 === "Configure the Qdrant Client"
     ```csharp
-    --8<-- "tests/Testcontainers.Qdrant.Tests/QdrantSecureContainerTest.cs:ConfigureQdrantClientCertificate-1"
+    --8<-- "tests/Testcontainers.Chroma.Tests/ChromaSecureContainerTest.cs:ConfigureChromaClientCertificate-1"
 
-    --8<-- "tests/Testcontainers.Qdrant.Tests/QdrantSecureContainerTest.cs:ConfigureQdrantClientCertificate-2"
+    --8<-- "tests/Testcontainers.Chroma.Tests/ChromaSecureContainerTest.cs:ConfigureChromaClientCertificate-2"
     ```
 
 ## A note to developers

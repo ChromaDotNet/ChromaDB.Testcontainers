@@ -1,16 +1,16 @@
-namespace Testcontainers.Qdrant;
+namespace Testcontainers.Chroma;
 
 /// <inheritdoc cref="DockerContainer" />
 [PublicAPI]
-public sealed class QdrantContainer : DockerContainer
+public sealed class ChromaContainer : DockerContainer
 {
-    private readonly QdrantConfiguration _configuration;
+    private readonly ChromaConfiguration _configuration;
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="QdrantContainer" /> class.
+    /// Initializes a new instance of the <see cref="ChromaContainer" /> class.
     /// </summary>
     /// <param name="configuration">The container configuration.</param>
-    public QdrantContainer(QdrantConfiguration configuration)
+    public ChromaContainer(ChromaConfiguration configuration)
         : base(configuration)
     {
         _configuration = configuration;
@@ -22,7 +22,7 @@ public sealed class QdrantContainer : DockerContainer
     public string GetHttpConnectionString()
     {
         var scheme = _configuration.TlsEnabled ? Uri.UriSchemeHttps : Uri.UriSchemeHttp;
-        var endpoint = new UriBuilder(scheme, Hostname, GetMappedPublicPort(QdrantBuilder.QdrantHttpPort));
+        var endpoint = new UriBuilder(scheme, Hostname, GetMappedPublicPort(ChromaBuilder.ChromaHttpPort));
         return endpoint.ToString();
     }
 
@@ -32,7 +32,7 @@ public sealed class QdrantContainer : DockerContainer
     public string GetGrpcConnectionString()
     {
         var scheme = _configuration.TlsEnabled ? Uri.UriSchemeHttps : Uri.UriSchemeHttp;
-        var endpoint = new UriBuilder(scheme, Hostname, GetMappedPublicPort(QdrantBuilder.QdrantGrpcPort));
+        var endpoint = new UriBuilder(scheme, Hostname, GetMappedPublicPort(ChromaBuilder.ChromaGrpcPort));
         return endpoint.ToString();
     }
 }

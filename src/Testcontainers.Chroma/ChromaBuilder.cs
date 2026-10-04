@@ -1,32 +1,32 @@
-namespace Testcontainers.Qdrant;
+namespace Testcontainers.Chroma;
 
 /// <inheritdoc cref="ContainerBuilder{TBuilderEntity, TContainerEntity, TConfigurationEntity}" />
 [PublicAPI]
-public sealed class QdrantBuilder : ContainerBuilder<QdrantBuilder, QdrantContainer, QdrantConfiguration>
+public sealed class ChromaBuilder : ContainerBuilder<ChromaBuilder, ChromaContainer, ChromaConfiguration>
 {
     [Obsolete("This constant is obsolete and will be removed in the future. Use the constructor with the image parameter instead: https://github.com/testcontainers/testcontainers-dotnet/discussions/1470#discussioncomment-15185721.")]
-    public const string QdrantImage = "qdrant/qdrant:v1.13.4";
+    public const string ChromaImage = "qdrant/qdrant:v1.13.4";
 
-    public const ushort QdrantHttpPort = 6333;
+    public const ushort ChromaHttpPort = 6333;
 
-    public const ushort QdrantGrpcPort = 6334;
+    public const ushort ChromaGrpcPort = 6334;
 
     public const string CertificateFilePath = "/qdrant/tls/cert.pem";
 
     public const string CertificateKeyFilePath = "/qdrant/tls/key.pem";
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="QdrantBuilder" /> class.
+    /// Initializes a new instance of the <see cref="ChromaBuilder" /> class.
     /// </summary>
     [Obsolete("This parameterless constructor is obsolete and will be removed. Use the constructor with the image parameter instead: https://github.com/testcontainers/testcontainers-dotnet/discussions/1470#discussioncomment-15185721.")]
     [ExcludeFromCodeCoverage]
-    public QdrantBuilder()
-        : this(QdrantImage)
+    public ChromaBuilder()
+        : this(ChromaImage)
     {
     }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="QdrantBuilder" /> class.
+    /// Initializes a new instance of the <see cref="ChromaBuilder" /> class.
     /// </summary>
     /// <param name="image">
     /// The full Docker image name, including the image repository and tag
@@ -35,13 +35,13 @@ public sealed class QdrantBuilder : ContainerBuilder<QdrantBuilder, QdrantContai
     /// <remarks>
     /// Docker image tags available at <see href="https://hub.docker.com/r/qdrant/qdrant/tags" />.
     /// </remarks>
-    public QdrantBuilder(string image)
+    public ChromaBuilder(string image)
         : this(new DockerImage(image))
     {
     }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="QdrantBuilder" /> class.
+    /// Initializes a new instance of the <see cref="ChromaBuilder" /> class.
     /// </summary>
     /// <param name="image">
     /// An <see cref="IImage" /> instance that specifies the Docker image to be used
@@ -50,33 +50,33 @@ public sealed class QdrantBuilder : ContainerBuilder<QdrantBuilder, QdrantContai
     /// <remarks>
     /// Docker image tags available at <see href="https://hub.docker.com/r/qdrant/qdrant/tags" />.
     /// </remarks>
-    public QdrantBuilder(IImage image)
-        : this(new QdrantConfiguration())
+    public ChromaBuilder(IImage image)
+        : this(new ChromaConfiguration())
     {
         DockerResourceConfiguration = Init().WithImage(image).DockerResourceConfiguration;
     }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="QdrantBuilder" /> class.
+    /// Initializes a new instance of the <see cref="ChromaBuilder" /> class.
     /// </summary>
     /// <param name="resourceConfiguration">The Docker resource configuration.</param>
-    private QdrantBuilder(QdrantConfiguration resourceConfiguration)
+    private ChromaBuilder(ChromaConfiguration resourceConfiguration)
         : base(resourceConfiguration)
     {
         DockerResourceConfiguration = resourceConfiguration;
     }
 
     /// <inheritdoc />
-    protected override QdrantConfiguration DockerResourceConfiguration { get; }
+    protected override ChromaConfiguration DockerResourceConfiguration { get; }
 
     /// <summary>
     /// Sets the API key to secure the instance.
     /// </summary>
     /// <param name="apiKey">The API key.</param>
-    /// <returns>A configured instance of <see cref="QdrantBuilder" />.</returns>
-    public QdrantBuilder WithApiKey(string apiKey)
+    /// <returns>A configured instance of <see cref="ChromaBuilder" />.</returns>
+    public ChromaBuilder WithApiKey(string apiKey)
     {
-        return Merge(DockerResourceConfiguration, new QdrantConfiguration(apiKey: apiKey))
+        return Merge(DockerResourceConfiguration, new ChromaConfiguration(apiKey: apiKey))
             .WithEnvironment("QDRANT__SERVICE__API_KEY", apiKey);
     }
 
@@ -85,10 +85,10 @@ public sealed class QdrantBuilder : ContainerBuilder<QdrantBuilder, QdrantContai
     /// </summary>
     /// <param name="certificate">The public certificate in PEM format.</param>
     /// <param name="certificateKey">The private key associated with the certificate in PEM format.</param>
-    /// <returns>A configured instance of <see cref="QdrantBuilder" />.</returns>
-    public QdrantBuilder WithCertificate(string certificate, string certificateKey)
+    /// <returns>A configured instance of <see cref="ChromaBuilder" />.</returns>
+    public ChromaBuilder WithCertificate(string certificate, string certificateKey)
     {
-        return Merge(DockerResourceConfiguration, new QdrantConfiguration(certificate: certificate, certificateKey: certificateKey))
+        return Merge(DockerResourceConfiguration, new ChromaConfiguration(certificate: certificate, certificateKey: certificateKey))
             .WithEnvironment("QDRANT__SERVICE__ENABLE_TLS", "1")
             .WithEnvironment("QDRANT__TLS__CERT", CertificateFilePath)
             .WithEnvironment("QDRANT__TLS__KEY", CertificateKeyFilePath)
@@ -97,41 +97,41 @@ public sealed class QdrantBuilder : ContainerBuilder<QdrantBuilder, QdrantContai
     }
 
     /// <inheritdoc />
-    public override QdrantContainer Build()
+    public override ChromaContainer Build()
     {
         Validate();
 
         // By default, the base builder waits until the container is running. However, for Qdrant, a more advanced waiting strategy is necessary that requires access to the configured certificate.
         // If the user does not provide a custom waiting strategy, append the default Qdrant waiting strategy.
-        var qdrantBuilder = DockerResourceConfiguration.WaitStrategies.Count() > 1 ? this : WithWaitStrategy(Wait.ForUnixContainer().AddCustomWaitStrategy(new WaitUntil(DockerResourceConfiguration)));
-        return new QdrantContainer(qdrantBuilder.DockerResourceConfiguration);
+        var chromaBuilder = DockerResourceConfiguration.WaitStrategies.Count() > 1 ? this : WithWaitStrategy(Wait.ForUnixContainer().AddCustomWaitStrategy(new WaitUntil(DockerResourceConfiguration)));
+        return new ChromaContainer(chromaBuilder.DockerResourceConfiguration);
     }
 
     /// <inheritdoc />
-    protected override QdrantBuilder Init()
+    protected override ChromaBuilder Init()
     {
         return base.Init()
-            .WithPortBinding(QdrantHttpPort, true)
-            .WithPortBinding(QdrantGrpcPort, true)
-            .WithConnectionStringProvider(new QdrantConnectionStringProvider());
+            .WithPortBinding(ChromaHttpPort, true)
+            .WithPortBinding(ChromaGrpcPort, true)
+            .WithConnectionStringProvider(new ChromaConnectionStringProvider());
     }
 
     /// <inheritdoc />
-    protected override QdrantBuilder Clone(IResourceConfiguration<CreateContainerParameters> resourceConfiguration)
+    protected override ChromaBuilder Clone(IResourceConfiguration<CreateContainerParameters> resourceConfiguration)
     {
-        return Merge(DockerResourceConfiguration, new QdrantConfiguration(resourceConfiguration));
+        return Merge(DockerResourceConfiguration, new ChromaConfiguration(resourceConfiguration));
     }
 
     /// <inheritdoc />
-    protected override QdrantBuilder Clone(IContainerConfiguration resourceConfiguration)
+    protected override ChromaBuilder Clone(IContainerConfiguration resourceConfiguration)
     {
-        return Merge(DockerResourceConfiguration, new QdrantConfiguration(resourceConfiguration));
+        return Merge(DockerResourceConfiguration, new ChromaConfiguration(resourceConfiguration));
     }
 
     /// <inheritdoc />
-    protected override QdrantBuilder Merge(QdrantConfiguration oldValue, QdrantConfiguration newValue)
+    protected override ChromaBuilder Merge(ChromaConfiguration oldValue, ChromaConfiguration newValue)
     {
-        return new QdrantBuilder(new QdrantConfiguration(oldValue, newValue));
+        return new ChromaBuilder(new ChromaConfiguration(oldValue, newValue));
     }
 
     /// <inheritdoc cref="IWaitUntil" />
@@ -143,7 +143,7 @@ public sealed class QdrantBuilder : ContainerBuilder<QdrantBuilder, QdrantContai
         /// Initializes a new instance of the <see cref="WaitUntil" /> class.
         /// </summary>
         /// <param name="configuration">The container configuration.</param>
-        public WaitUntil(QdrantConfiguration configuration)
+        public WaitUntil(ChromaConfiguration configuration)
         {
             _tlsEnabled = configuration.TlsEnabled;
         }
@@ -157,7 +157,7 @@ public sealed class QdrantBuilder : ContainerBuilder<QdrantBuilder, QdrantContai
             var httpWaitStrategy = new HttpWaitStrategy()
                 .UsingHttpMessageHandler(httpMessageHandler)
                 .UsingTls(_tlsEnabled)
-                .ForPort(QdrantHttpPort)
+                .ForPort(ChromaHttpPort)
                 .ForPath("/readyz");
 
             return await httpWaitStrategy.UntilAsync(container)

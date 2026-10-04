@@ -1,6 +1,6 @@
-namespace Testcontainers.Qdrant;
+namespace Testcontainers.Chroma;
 
-public sealed class QdrantSecureContainerTest : IAsyncLifetime
+public sealed class ChromaSecureContainerTest : IAsyncLifetime
 {
     private static readonly string ApiKey = Guid.NewGuid().ToString("D");
 
@@ -12,25 +12,25 @@ public sealed class QdrantSecureContainerTest : IAsyncLifetime
 
     private static readonly string Thumbprint = PemCertificate.Instance.Thumbprint;
 
-    private readonly QdrantContainer _qdrantContainer = new QdrantBuilder(TestSession.GetImageFromDockerfile())
-        // # --8<-- [start:ConfigureQdrantContainerApiKey]
+    private readonly ChromaContainer _chromaContainer = new ChromaBuilder(TestSession.GetImageFromDockerfile())
+        // # --8<-- [start:ConfigureChromaContainerApiKey]
         .WithApiKey(ApiKey)
-        // # --8<-- [end:ConfigureQdrantContainerApiKey]
+        // # --8<-- [end:ConfigureChromaContainerApiKey]
 
-        // # --8<-- [start:ConfigureQdrantContainerCertificate]
+        // # --8<-- [start:ConfigureChromaContainerCertificate]
         .WithCertificate(Certificate, CertificateKey)
-        // # --8<-- [end:ConfigureQdrantContainerCertificate]
+        // # --8<-- [end:ConfigureChromaContainerCertificate]
         .Build();
 
     public async ValueTask InitializeAsync()
     {
-        await _qdrantContainer.StartAsync()
+        await _chromaContainer.StartAsync()
             .ConfigureAwait(false);
     }
 
     public ValueTask DisposeAsync()
     {
-        return _qdrantContainer.DisposeAsync();
+        return _chromaContainer.DisposeAsync();
     }
 
     [Fact]
@@ -38,28 +38,28 @@ public sealed class QdrantSecureContainerTest : IAsyncLifetime
     public async Task HealthReturnsValidResponse()
     {
         // Given
-        // # --8<-- [start:ConfigureQdrantClientCertificate-1]
+        // # --8<-- [start:ConfigureChromaClientCertificate-1]
         using var httpMessageHandler = new HttpClientHandler();
         httpMessageHandler.ServerCertificateCustomValidationCallback = CertificateValidation.Thumbprint(Thumbprint);
 
         using var httpClient = new HttpClient(httpMessageHandler);
         httpClient.DefaultRequestHeaders.Host = CommonName;
-        // # --8<-- [end:ConfigureQdrantClientCertificate-1]
+        // # --8<-- [end:ConfigureChromaClientCertificate-1]
 
-        // # --8<-- [start:ConfigureQdrantClientApiKey]
+        // # --8<-- [start:ConfigureChromaClientApiKey]
         httpClient.DefaultRequestHeaders.Add("api-key", ApiKey);
-        // # --8<-- [end:ConfigureQdrantClientApiKey]
+        // # --8<-- [end:ConfigureChromaClientApiKey]
 
-        // # --8<-- [start:ConfigureQdrantClientCertificate-2]
+        // # --8<-- [start:ConfigureChromaClientCertificate-2]
         var grpcChannelOptions = new GrpcChannelOptions();
         grpcChannelOptions.HttpClient = httpClient;
 
-        using var grpcChannel = GrpcChannel.ForAddress(_qdrantContainer.GetGrpcConnectionString(), grpcChannelOptions);
+        using var grpcChannel = GrpcChannel.ForAddress(_chromaContainer.GetGrpcConnectionString(), grpcChannelOptions);
 
         using var grpcClient = new QdrantGrpcClient(grpcChannel);
 
         using var client = new QdrantClient(grpcClient);
-        // # --8<-- [end:ConfigureQdrantClientCertificate-2]
+        // # --8<-- [end:ConfigureChromaClientCertificate-2]
 
         // When
         var response = await client.HealthAsync(TestContext.Current.CancellationToken)
@@ -83,7 +83,7 @@ public sealed class QdrantSecureContainerTest : IAsyncLifetime
         var grpcChannelOptions = new GrpcChannelOptions();
         grpcChannelOptions.HttpClient = httpClient;
 
-        using var grpcChannel = GrpcChannel.ForAddress(_qdrantContainer.GetGrpcConnectionString(), grpcChannelOptions);
+        using var grpcChannel = GrpcChannel.ForAddress(_chromaContainer.GetGrpcConnectionString(), grpcChannelOptions);
 
         using var grpcClient = new QdrantGrpcClient(grpcChannel);
 
@@ -103,7 +103,7 @@ public sealed class QdrantSecureContainerTest : IAsyncLifetime
     {
         // Given
         using var httpClient = new HttpClient();
-        httpClient.BaseAddress = new Uri(_qdrantContainer.GetHttpConnectionString());
+        httpClient.BaseAddress = new Uri(_chromaContainer.GetHttpConnectionString());
         httpClient.DefaultRequestHeaders.Host = CommonName;
         httpClient.DefaultRequestHeaders.Add("api-key", ApiKey);
 

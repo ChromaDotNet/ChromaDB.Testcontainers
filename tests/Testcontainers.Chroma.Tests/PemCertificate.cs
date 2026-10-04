@@ -1,4 +1,4 @@
-namespace Testcontainers.Qdrant;
+namespace Testcontainers.Chroma;
 
 public sealed class PemCertificate
 {
