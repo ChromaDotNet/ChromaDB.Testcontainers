@@ -1,6 +1,6 @@
 # Chroma
 
-[Chroma](https://www.trychroma.com/) is an open source vector database for AI applications. It stores embeddings with their documents and metadata, and finds the nearest ones to a query, through a REST API.
+[Chroma](https://www.trychroma.com/) is an open-source vector database for AI applications. It stores embeddings with their documents and metadata, and finds the nearest ones to a query, through a REST API.
 
 Add the following dependency to your project file:
 
