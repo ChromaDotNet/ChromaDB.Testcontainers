@@ -2,6 +2,7 @@ namespace Testcontainers.Chroma;
 
 public sealed class ChromaDefaultContainerTest : IAsyncLifetime
 {
+    // # --8<-- [start:UseChromaContainer]
     private readonly ChromaContainer _chromaContainer = new ChromaBuilder(TestSession.GetImageFromDockerfile()).Build();
 
     public async ValueTask InitializeAsync()
@@ -14,6 +15,34 @@ public sealed class ChromaDefaultContainerTest : IAsyncLifetime
     {
         return _chromaContainer.DisposeAsync();
     }
+
+    [Fact]
+    [Trait(nameof(DockerCli.DockerPlatform), nameof(DockerCli.DockerPlatform.Linux))]
+    public async Task QueryReturnsNearestRecord()
+    {
+        // Given
+        using var httpClient = new HttpClient();
+
+        var options = new ChromaConfigurationOptions(_chromaContainer.GetConnectionString());
+
+        var client = new ChromaClient(options, httpClient);
+
+        var collection = await client.CreateCollection("documents", cancellationToken: TestContext.Current.CancellationToken)
+            .ConfigureAwait(true);
+
+        var collectionClient = new ChromaCollectionClient(collection, options, httpClient);
+
+        await collectionClient.Add(["a", "b"], [new[] { 1f, 0f }, new[] { 0f, 1f }], cancellationToken: TestContext.Current.CancellationToken)
+            .ConfigureAwait(true);
+
+        // When
+        var results = await collectionClient.Query(new[] { 0.9f, 0.1f }, nResults: 1, cancellationToken: TestContext.Current.CancellationToken)
+            .ConfigureAwait(true);
+
+        // Then
+        Assert.Equal("a", Assert.Single(results).Id);
+    }
+    // # --8<-- [end:UseChromaContainer]
 
     [Fact]
     [Trait(nameof(DockerCli.DockerPlatform), nameof(DockerCli.DockerPlatform.Linux))]
