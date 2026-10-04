@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project>
+  <!-- The project file of the module is the one of testcontainers-dotnet, synced by eng/sync-from-upstream.sh: here
+       the module is published as ChromaDotNet.Testcontainers, and takes Testcontainers from NuGet instead of the
+       project of that repository. -->
+  <PropertyGroup Condition=" '$(MSBuildProjectName)' == 'Testcontainers.Chroma' ">
+    <PackageId>ChromaDotNet.Testcontainers</PackageId>
+    <Description>A Testcontainers for .NET module for Chroma: start a throwaway Chroma container in your tests.</Description>
+  </PropertyGroup>
+  <ItemGroup Condition=" '$(MSBuildProjectName)' == 'Testcontainers.Chroma' ">
+    <ProjectReference Remove="../Testcontainers/Testcontainers.csproj"/>
+    <PackageReference Include="Testcontainers"/>
+  </ItemGroup>
+</Project>
