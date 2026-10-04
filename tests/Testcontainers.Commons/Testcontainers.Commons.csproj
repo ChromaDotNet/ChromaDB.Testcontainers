@@ -4,14 +4,13 @@
         <IsPackable>false</IsPackable>
         <IsPublishable>false</IsPublishable>
         <IsTestProject>false</IsTestProject>
-        <SignAssembly>true</SignAssembly>
         <LangVersion>latest</LangVersion>
     </PropertyGroup>
     <ItemGroup>
         <PackageReference Include="JetBrains.Annotations" VersionOverride="2026.2.0"/>
     </ItemGroup>
     <ItemGroup>
-        <ProjectReference Include="../../src/Testcontainers/Testcontainers.csproj"/>
+        <PackageReference Include="Testcontainers"/>
     </ItemGroup>
     <ItemGroup>
         <None Include="ssl/**/*">

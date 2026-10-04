@@ -7,6 +7,6 @@
         <PackageReference Include="JetBrains.Annotations" VersionOverride="2026.2.0" PrivateAssets="All"/>
     </ItemGroup>
     <ItemGroup>
-        <ProjectReference Include="../Testcontainers/Testcontainers.csproj"/>
+        <PackageReference Include="Testcontainers"/>
     </ItemGroup>
 </Project>

@@ -1,0 +1,9 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/Testcontainers.Qdrant/Testcontainers.Qdrant.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/Testcontainers.Commons/Testcontainers.Commons.csproj" />
+    <Project Path="tests/Testcontainers.Qdrant.Tests/Testcontainers.Qdrant.Tests.csproj" />
+  </Folder>
+</Solution>
