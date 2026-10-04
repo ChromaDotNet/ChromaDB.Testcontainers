@@ -37,12 +37,15 @@ The container is ready when the heartbeat of the Chroma API answers: the v2 API 
 ```bash
 dotnet build ChromaDB.Testcontainers.slnx
 dotnet test tests/Testcontainers.Chroma.Tests
+CHROMA_IMAGE=chromadb/chroma:0.4.10 dotnet test tests/Testcontainers.Chroma.ImageTests
 ```
 
-The tests start Chroma in containers, so they need Docker.
+The tests start Chroma in containers, so they need Docker. `tests/Testcontainers.Chroma.ImageTests` runs on the image in `CHROMA_IMAGE`, which the CI sets to each Chroma release it tests.
 
 ## Origin
 
 The module follows the structure and conventions of the modules of [Testcontainers for .NET](https://github.com/testcontainers/testcontainers-dotnet), so that it can become one of them: the code and the tests started as a copy of its Qdrant module, under the MIT license, and [docs/modules/chroma.md](docs/modules/chroma.md) follows the format of its module pages.
 
 It is proposed to Testcontainers for .NET in [testcontainers/testcontainers-dotnet#1784](https://github.com/testcontainers/testcontainers-dotnet/pull/1784). This repository publishes it until Testcontainers for .NET ships `Testcontainers.Chroma`; then it will be archived and the package deprecated in its favor. The namespace and the API are the same, so moving there changes only the package reference.
+
+Every change to the module is made first in that pull request; `eng/sync-from-upstream.sh` copies `src/Testcontainers.Chroma`, `tests/Testcontainers.Chroma.Tests` and `docs/modules/chroma.md` here. The rest, like the build files, the CI and `tests/Testcontainers.Chroma.ImageTests`, belongs to this repository.
