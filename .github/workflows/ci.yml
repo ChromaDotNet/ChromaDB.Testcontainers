@@ -44,7 +44,9 @@ jobs:
         run: dotnet build ChromaDB.Testcontainers.slnx -c Release
 
       - name: Test
-        run: dotnet test tests/Testcontainers.Chroma.Tests -c Release --no-build
+        run: |
+          dotnet test tests/Testcontainers.Chroma.Tests -c Release --no-build
+          dotnet test tests/Testcontainers.Chroma.ImageTests -c Release --no-build
 
   # Every run packs the module; only a version tag publishes it, with the version set in Directory.Build.props.
   package:
