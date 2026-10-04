@@ -30,7 +30,7 @@ public sealed class ChromaDefaultContainerTest : IAsyncLifetime
         var collection = await client.CreateCollection("documents", cancellationToken: TestContext.Current.CancellationToken)
             .ConfigureAwait(true);
 
-        var collectionClient = new ChromaCollectionClient(collection, options, httpClient);
+        var collectionClient = client.GetCollectionClient(collection);
 
         await collectionClient.Add(["a", "b"], [new[] { 1f, 0f }, new[] { 0f, 1f }], cancellationToken: TestContext.Current.CancellationToken)
             .ConfigureAwait(true);
