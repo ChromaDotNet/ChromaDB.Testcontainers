@@ -4,8 +4,6 @@ namespace Testcontainers.Chroma;
 [PublicAPI]
 public sealed class ChromaContainer : DockerContainer
 {
-    private readonly ChromaConfiguration _configuration;
-
     /// <summary>
     /// Initializes a new instance of the <see cref="ChromaContainer" /> class.
     /// </summary>
@@ -13,26 +11,14 @@ public sealed class ChromaContainer : DockerContainer
     public ChromaContainer(ChromaConfiguration configuration)
         : base(configuration)
     {
-        _configuration = configuration;
     }
 
     /// <summary>
-    /// Gets the connection string for connecting to Qdrant REST APIs.
+    /// Gets the base address of the Chroma HTTP API.
     /// </summary>
-    public string GetHttpConnectionString()
+    /// <returns>The base address of the Chroma HTTP API, like <c>http://localhost:32768/</c>.</returns>
+    public string GetBaseAddress()
     {
-        var scheme = _configuration.TlsEnabled ? Uri.UriSchemeHttps : Uri.UriSchemeHttp;
-        var endpoint = new UriBuilder(scheme, Hostname, GetMappedPublicPort(ChromaBuilder.ChromaHttpPort));
-        return endpoint.ToString();
-    }
-
-    /// <summary>
-    /// Gets the connection string for connecting to Qdrant gRPC APIs.
-    /// </summary>
-    public string GetGrpcConnectionString()
-    {
-        var scheme = _configuration.TlsEnabled ? Uri.UriSchemeHttps : Uri.UriSchemeHttp;
-        var endpoint = new UriBuilder(scheme, Hostname, GetMappedPublicPort(ChromaBuilder.ChromaGrpcPort));
-        return endpoint.ToString();
+        return new UriBuilder(Uri.UriSchemeHttp, Hostname, GetMappedPublicPort(ChromaBuilder.ChromaHttpPort)).ToString();
     }
 }

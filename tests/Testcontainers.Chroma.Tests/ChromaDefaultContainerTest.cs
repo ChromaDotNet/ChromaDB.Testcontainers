@@ -2,7 +2,6 @@ namespace Testcontainers.Chroma;
 
 public sealed class ChromaDefaultContainerTest : IAsyncLifetime
 {
-    // # --8<-- [start:UseChromaContainer]
     private readonly ChromaContainer _chromaContainer = new ChromaBuilder(TestSession.GetImageFromDockerfile()).Build();
 
     public async ValueTask InitializeAsync()
@@ -18,34 +17,18 @@ public sealed class ChromaDefaultContainerTest : IAsyncLifetime
 
     [Fact]
     [Trait(nameof(DockerCli.DockerPlatform), nameof(DockerCli.DockerPlatform.Linux))]
-    public async Task HealthReturnsValidResponse()
-    {
-        // Given
-        using var client = new QdrantClient(new Uri(_chromaContainer.GetGrpcConnectionString()));
-
-        // When
-        var response = await client.HealthAsync(TestContext.Current.CancellationToken)
-            .ConfigureAwait(true);
-
-        // Then
-        Assert.NotEmpty(response.Title);
-        Assert.Equal(_chromaContainer.GetHttpConnectionString(), _chromaContainer.GetConnectionString());
-    }
-    // # --8<-- [end:UseChromaContainer]
-
-    [Fact]
-    [Trait(nameof(DockerCli.DockerPlatform), nameof(DockerCli.DockerPlatform.Linux))]
-    public async Task GetRootEndpointReturnsHttpStatusCodeOk()
+    public async Task GetHeartbeatReturnsHttpStatusCodeOk()
     {
         // Given
         using var httpClient = new HttpClient();
-        httpClient.BaseAddress = new Uri(_chromaContainer.GetHttpConnectionString());
+        httpClient.BaseAddress = new Uri(_chromaContainer.GetBaseAddress());
 
         // When
-        using var httpResponse = await httpClient.GetAsync("/", TestContext.Current.CancellationToken)
+        using var httpResponse = await httpClient.GetAsync("/api/v2/heartbeat", TestContext.Current.CancellationToken)
             .ConfigureAwait(true);
 
         // Then
         Assert.Equal(HttpStatusCode.OK, httpResponse.StatusCode);
+        Assert.Equal(_chromaContainer.GetBaseAddress(), _chromaContainer.GetConnectionString());
     }
 }

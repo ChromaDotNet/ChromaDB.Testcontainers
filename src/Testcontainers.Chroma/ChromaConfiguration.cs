@@ -7,17 +7,8 @@ public sealed class ChromaConfiguration : ContainerConfiguration
     /// <summary>
     /// Initializes a new instance of the <see cref="ChromaConfiguration" /> class.
     /// </summary>
-    /// <param name="apiKey">The API key.</param>
-    /// <param name="certificate">The public certificate in PEM format.</param>
-    /// <param name="certificateKey">The private key associated with the certificate in PEM format.</param>
-    public ChromaConfiguration(
-        string apiKey = null,
-        string certificate = null,
-        string certificateKey = null)
+    public ChromaConfiguration()
     {
-        ApiKey = apiKey;
-        Certificate = certificate;
-        CertificateKey = certificateKey;
     }
 
     /// <summary>
@@ -58,28 +49,5 @@ public sealed class ChromaConfiguration : ContainerConfiguration
     public ChromaConfiguration(ChromaConfiguration oldValue, ChromaConfiguration newValue)
         : base(oldValue, newValue)
     {
-        ApiKey = BuildConfiguration.Combine(oldValue.ApiKey, newValue.ApiKey);
-        Certificate = BuildConfiguration.Combine(oldValue.Certificate, newValue.Certificate);
-        CertificateKey = BuildConfiguration.Combine(oldValue.CertificateKey, newValue.CertificateKey);
     }
-
-    /// <summary>
-    /// Gets a value indicating whether TLS is enabled or not.
-    /// </summary>
-    public bool TlsEnabled => Certificate != null && CertificateKey != null;
-
-    /// <summary>
-    /// Gets the API key that secures the instance.
-    /// </summary>
-    public string ApiKey { get; }
-
-    /// <summary>
-    /// Gets the public certificate in PEM format.
-    /// </summary>
-    public string Certificate { get; }
-
-    /// <summary>
-    /// Gets the private key associated with the certificate in PEM format.
-    /// </summary>
-    public string CertificateKey { get; }
 }
