@@ -1,6 +1,6 @@
-# Qdrant
+# Chroma
 
-[Qdrant](https://qdrant.tech/) is an open source vector database designed for scalable and efficient similarity search and nearest neighbor retrieval. It provides both RESTful and gRPC APIs, making it easy to integrate with various applications, including search, recommendation, AI, and machine learning systems.
+[Chroma](https://www.trychroma.com/) is an open source vector database for AI applications. It stores embeddings with their documents and metadata, and finds the nearest ones to a query, through a REST API.
 
 Add the following dependency to your project file:
 
@@ -8,7 +8,7 @@ Add the following dependency to your project file:
 dotnet add package Testcontainers.Chroma
 ```
 
-You can start a Qdrant container instance from any .NET application. This example uses xUnit.net's `IAsyncLifetime` interface to manage the lifecycle of the container. The container is started in the `InitializeAsync` method before the test method runs, ensuring that the environment is ready for testing. After the test completes, the container is removed in the `DisposeAsync` method.
+You can start a Chroma container instance from any .NET application. This example uses xUnit.net's `IAsyncLifetime` interface to manage the lifecycle of the container. The container is started in the `InitializeAsync` method before the test method runs, ensuring that the environment is ready for testing. After the test completes, the container is removed in the `DisposeAsync` method.
 
 === "Usage Example"
     ```csharp
@@ -26,50 +26,6 @@ To execute the tests, use the command `dotnet test` from a terminal.
 
 --8<-- "docs/modules/_call_out_test_projects.txt"
 
-## Configure API key
+## Chroma versions
 
-To set and configure an API key, use the following container builder method:
-
-=== "Configure the API Key"
-    ```csharp
-    --8<-- "tests/Testcontainers.Chroma.Tests/ChromaSecureContainerTest.cs:ConfigureChromaContainerApiKey"
-    ```
-
-Make sure the underlying Qdrant HTTP or gRPC client adds the API key to the HTTP header or gRPC metadata:
-
-=== "Configure the Qdrant Client"
-    ```csharp
-    --8<-- "tests/Testcontainers.Chroma.Tests/ChromaSecureContainerTest.cs:ConfigureChromaClientApiKey"
-    ```
-
-## Configure TLS
-
-The following example generates a self-signed certificate and configures the module to use TLS with the certificate and private key:
-
-!!! note
-
-    Please ensure that both the certificate and private key are provided in PEM format.
-
-=== "Configure the TLS Certificate"
-    ```csharp
-    --8<-- "tests/Testcontainers.Chroma.Tests/ChromaSecureContainerTest.cs:ConfigureChromaContainerCertificate"
-    ```
-
-The Qdrant client is configured to validate the TLS certificate using its thumbprint:
-
-=== "Configure the Qdrant Client"
-    ```csharp
-    --8<-- "tests/Testcontainers.Chroma.Tests/ChromaSecureContainerTest.cs:ConfigureChromaClientCertificate-1"
-
-    --8<-- "tests/Testcontainers.Chroma.Tests/ChromaSecureContainerTest.cs:ConfigureChromaClientCertificate-2"
-    ```
-
-## A note to developers
-
-The module creates a container that listens to requests over **HTTP**. The official Qdrant client uses the gRPC APIs to communicate with Qdrant. **.NET Core** and **.NET** support the above example with no additional configuration. However, **.NET Framework** has limited supported for gRPC over HTTP/2, but it can be enabled by:
-
-1. Configuring the module to use TLS.
-1. Configuring server certificate validation.
-1. Reference [`System.Net.Http.WinHttpHandler`](https://www.nuget.org/packages/System.Net.Http.WinHttpHandler) version `6.0.1` or later, and configure `WinHttpHandler` as handler for `GrpcChannelOptions` in the Qdrant client.
-
-Refer to the official [Qdrant .NET SDK](https://github.com/qdrant/qdrant-dotnet) for more information.
+The container is ready when the heartbeat of the Chroma API answers. Chroma 0.5.16 and later answer the heartbeat of the v2 API, and the earlier releases have only the v1 API, so the module asks both: it works with any Chroma image, whatever its tag.
