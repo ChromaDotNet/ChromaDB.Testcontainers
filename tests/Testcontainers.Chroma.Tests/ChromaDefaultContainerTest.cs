@@ -21,11 +21,7 @@ public sealed class ChromaDefaultContainerTest : IAsyncLifetime
     public async Task QueryReturnsNearestRecord()
     {
         // Given
-        using var httpClient = new HttpClient();
-
-        var options = new ChromaConfigurationOptions(_chromaContainer.GetConnectionString());
-
-        var client = new ChromaClient(options, httpClient);
+        using var client = new ChromaClient(_chromaContainer.GetConnectionString());
 
         var collection = await client.CreateCollection("documents", cancellationToken: TestContext.Current.CancellationToken)
             .ConfigureAwait(true);
