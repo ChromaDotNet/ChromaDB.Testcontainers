@@ -5,7 +5,7 @@
        project of that repository. -->
   <PropertyGroup Condition=" '$(MSBuildProjectName)' == 'Testcontainers.Chroma' ">
     <PackageId>ChromaDotNet.Testcontainers</PackageId>
-    <Description>A Testcontainers for .NET module for Chroma: start a throwaway Chroma container in your tests.</Description>
+    <Description>A Testcontainers for .NET module for Chroma: start a throwaway Chroma container in your tests. Community project, not affiliated with Chroma.</Description>
   </PropertyGroup>
   <ItemGroup Condition=" '$(MSBuildProjectName)' == 'Testcontainers.Chroma' ">
     <ProjectReference Remove="../Testcontainers/Testcontainers.csproj"/>
