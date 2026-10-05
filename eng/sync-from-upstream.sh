@@ -38,7 +38,8 @@ else
 fi
 me=$(gh api user --jq .login)
 for sha in $(git -C "$upstream" rev-list $range -- $paths); do
-  login=$(gh api "repos/$slug/commits/$sha" --jq '.author.login // empty' 2>/dev/null || true)
+  # A commit GitHub does not have yet, like one not pushed, has no login: gh prints the error body, so it is dropped.
+  login=$(gh api "repos/$slug/commits/$sha" --jq '.author.login // empty' 2>/dev/null) || login=""
   [ -z "$login" ] || [ "$login" = "$me" ] && continue
   id=$(gh api "users/$login" --jq .id)
   name=$(git -C "$upstream" log -1 --format=%an "$sha" | cut -d' ' -f1)
