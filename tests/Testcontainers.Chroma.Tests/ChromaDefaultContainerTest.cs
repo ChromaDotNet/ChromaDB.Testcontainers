@@ -23,16 +23,16 @@ public sealed class ChromaDefaultContainerTest : IAsyncLifetime
         // Given
         using var client = new ChromaClient(_chromaContainer.GetConnectionString());
 
-        var collection = await client.CreateCollection("documents", cancellationToken: TestContext.Current.CancellationToken)
+        var collection = await client.CreateCollectionAsync("documents", cancellationToken: TestContext.Current.CancellationToken)
             .ConfigureAwait(true);
 
         var collectionClient = client.GetCollectionClient(collection);
 
-        await collectionClient.Add(["a", "b"], [new[] { 1f, 0f }, new[] { 0f, 1f }], cancellationToken: TestContext.Current.CancellationToken)
+        await collectionClient.AddAsync(["a", "b"], [new[] { 1f, 0f }, new[] { 0f, 1f }], cancellationToken: TestContext.Current.CancellationToken)
             .ConfigureAwait(true);
 
         // When
-        var results = await collectionClient.Query(new[] { 0.9f, 0.1f }, nResults: 1, cancellationToken: TestContext.Current.CancellationToken)
+        var results = await collectionClient.QueryAsync(new[] { 0.9f, 0.1f }, nResults: 1, cancellationToken: TestContext.Current.CancellationToken)
             .ConfigureAwait(true);
 
         // Then
