@@ -22,7 +22,7 @@ var address = chroma.GetConnectionString();
 
 `GetBaseAddress()` returns the same address; `ChromaBuilder.ChromaHttpPort` is the port of the API in the container, 8000.
 
-With [ChromaDotNet.Client](https://github.com/ChromaDotNet/ChromaDB.Client):
+With [ChromaDB.Client](https://github.com/ChromaDotNet/ChromaDB.Client), the `ChromaDotNet.Client` package:
 
 ```csharp
 using ChromaDB.Client;
