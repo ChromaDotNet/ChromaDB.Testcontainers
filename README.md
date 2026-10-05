@@ -48,7 +48,7 @@ The tests start Chroma in containers, so they need Docker. `tests/Testcontainers
 
 ## Origin
 
-The module follows the structure and conventions of the modules of [Testcontainers for .NET](https://github.com/testcontainers/testcontainers-dotnet), so that it can become one of them: the code and the tests started as a copy of its Qdrant module, under the MIT license, and [docs/modules/chroma.md](docs/modules/chroma.md) follows the format of its module pages.
+The module follows the structure and conventions of the modules of [Testcontainers for .NET](https://github.com/testcontainers/testcontainers-dotnet), so that it can become one of them: the code and the tests started as a copy of its Qdrant module, under the MIT license, and [docs/modules/chroma.md](https://github.com/ChromaDotNet/ChromaDB.Testcontainers/blob/main/docs/modules/chroma.md) is the page proposed for its documentation site: it names the package `Testcontainers.Chroma` that Testcontainers for .NET would publish, and its `--8<--` lines include the code when that site is built. Here the package is `ChromaDotNet.Testcontainers`.
 
 It is proposed to Testcontainers for .NET in [testcontainers/testcontainers-dotnet#1784](https://github.com/testcontainers/testcontainers-dotnet/pull/1784). This repository publishes it until Testcontainers for .NET ships `Testcontainers.Chroma`; then it will be archived and the package deprecated in its favor. The namespace and the API are the same, so moving there changes only the package reference.
 
