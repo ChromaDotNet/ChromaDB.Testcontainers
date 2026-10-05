@@ -8,6 +8,7 @@
     <Authors>ChromaDotNet contributors</Authors>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageIcon>icon.png</PackageIcon>
     <PackageProjectUrl>https://github.com/ChromaDotNet/ChromaDB.Testcontainers</PackageProjectUrl>
     <PackageTags>chroma;chromadb;docker;dotnet;testcontainers;testing;vector-database</PackageTags>
     <RepositoryType>git</RepositoryType>
@@ -29,5 +30,6 @@
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)LICENSE" Visible="false" Pack="true" PackagePath=""/>
     <None Include="$(MSBuildThisFileDirectory)README.md" Visible="false" Pack="true" PackagePath=""/>
+    <None Include="$(MSBuildThisFileDirectory)icon.png" Visible="false" Pack="true" PackagePath=""/>
   </ItemGroup>
 </Project>
