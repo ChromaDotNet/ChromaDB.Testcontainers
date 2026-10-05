@@ -23,11 +23,13 @@ var address = chroma.GetConnectionString();
 With [ChromaDotNet.Client](https://github.com/ChromaDotNet/ChromaDB.Client):
 
 ```csharp
+using ChromaDB.Client;
+
 using var httpClient = new HttpClient();
 var options = new ChromaConfigurationOptions(chroma.GetConnectionString());
 var client = new ChromaClient(options, httpClient);
 
-var collection = await client.CreateCollection("documents");
+var collection = await client.CreateCollectionAsync("documents");
 ```
 
 The container is ready when the heartbeat of the Chroma API answers: the v2 API from Chroma 0.5.16, and the v1 API on the earlier releases, so the module works with any Chroma image, whatever its tag.
