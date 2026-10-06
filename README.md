@@ -1,8 +1,12 @@
+[![ChromaDotNet](https://raw.githubusercontent.com/ChromaDotNet/.github/main/assets/logo-64.png)](https://chromadotnet.org)
+
 # ChromaDB.Testcontainers
 
 A [Testcontainers for .NET](https://dotnet.testcontainers.org/) module for [Chroma](https://www.trychroma.com/), published as the `ChromaDotNet.Testcontainers` package: start a throwaway Chroma container in your tests.
 
 > This is a community project. It is not affiliated with or endorsed by Testcontainers or Chroma.
+
+Website: [chromadotnet.org](https://chromadotnet.org)
 
 ## Usage
 
@@ -22,7 +26,7 @@ var address = chroma.GetConnectionString();
 
 `GetBaseAddress()` returns the same address; `ChromaBuilder.ChromaHttpPort` is the port of the API in the container, 8000.
 
-With [ChromaDotNet.Client](https://github.com/ChromaDotNet/ChromaDB.Client):
+With [ChromaDB.Client](https://github.com/ChromaDotNet/ChromaDB.Client), the `ChromaDotNet.Client` package:
 
 ```csharp
 using ChromaDB.Client;
