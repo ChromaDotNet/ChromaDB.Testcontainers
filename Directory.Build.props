@@ -11,6 +11,7 @@
     <PackageIcon>icon.png</PackageIcon>
     <PackageProjectUrl>https://github.com/ChromaDotNet/ChromaDB.Testcontainers</PackageProjectUrl>
     <PackageTags>chroma;chromadb;docker;dotnet;testcontainers;testing;vector-database</PackageTags>
+    <PackageDescription>A Testcontainers module for Chroma, for .NET. Independent project. Not affiliated with, endorsed by or sponsored by Chroma Inc. CHROMA is a registered trademark of Chroma Inc., used here only to describe compatibility.</PackageDescription>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/ChromaDotNet/ChromaDB.Testcontainers</RepositoryUrl>
   </PropertyGroup>

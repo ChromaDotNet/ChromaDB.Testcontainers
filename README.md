@@ -4,7 +4,7 @@
 
 A [Testcontainers for .NET](https://dotnet.testcontainers.org/) module for [Chroma](https://www.trychroma.com/), published as the `ChromaDotNet.Testcontainers` package. It starts a throwaway Chroma container in your tests.
 
-> This is a community project. It is not affiliated with or endorsed by Testcontainers or Chroma.
+> ChromaDotNet is an independent community project that provides .NET libraries and tools for Chroma. Independent project. Not affiliated with, endorsed by or sponsored by Chroma Inc. CHROMA is a registered trademark of Chroma Inc., used here only to describe compatibility. We use the name "Chroma" only to say which software our projects work with. It does not mean that Chroma Inc. made, approved or supports them. It is not affiliated with or endorsed by Testcontainers either.
 
 Website: [chromadotnet.org](https://chromadotnet.org)
 
