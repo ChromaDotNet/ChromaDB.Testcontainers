@@ -10,5 +10,7 @@
   <ItemGroup Condition=" '$(MSBuildProjectName)' == 'Testcontainers.Chroma' ">
     <ProjectReference Remove="../Testcontainers/Testcontainers.csproj"/>
     <PackageReference Include="Testcontainers"/>
+    <!-- What the module calls and the package of Testcontainers doesn't have yet: see the files. -->
+    <Compile Include="$(MSBuildThisFileDirectory)src/Compat/*.cs" LinkBase="Compat"/>
   </ItemGroup>
 </Project>
