@@ -1,8 +1,8 @@
 #!/bin/sh
 # Usage: eng/sync-from-upstream.sh <clone of testcontainers/testcontainers-dotnet> <ref>
 # Copies the Chroma module of testcontainers-dotnet at <ref> (the branch of the pull request, fetched first, or develop
-# once it is merged) into this repository and commits it, with a Co-authored-by line for each author of the upstream
-# commits since the last sync. The last synced upstream commit is kept in eng/upstream-commit.txt.
+# once it is merged) into this repository and commits it. The commit is ours, so it names no upstream author: their
+# names stay on their own commits. The last synced upstream commit is kept in eng/upstream-commit.txt.
 set -e
 upstream="$1"; ref="$2"
 [ -n "$upstream" ] && [ -n "$ref" ] || { echo "Usage: $0 <clone of testcontainers/testcontainers-dotnet> <ref>" >&2; exit 2; }
@@ -28,28 +28,5 @@ if git -C "$repo" diff --cached --quiet -- $paths; then
   exit 0
 fi
 
-# Authors of the upstream commits since the last sync that touch the module, as GitHub noreply addresses when the
-# commit carries a login, never other emails.
-coauthors=""
-if [ -n "$old" ] && git -C "$upstream" merge-base --is-ancestor "$old" "$new" 2>/dev/null; then
-  range="$old..$new"
-else
-  range="$new -1"
-fi
-me=$(gh api user --jq .login)
-for sha in $(git -C "$upstream" rev-list $range -- $paths); do
-  # A commit GitHub does not have yet, like one not pushed, has no login: gh prints the error body, so it is dropped.
-  login=$(gh api "repos/$slug/commits/$sha" --jq '.author.login // empty' 2>/dev/null) || login=""
-  [ -z "$login" ] || [ "$login" = "$me" ] && continue
-  id=$(gh api "users/$login" --jq .id)
-  name=$(git -C "$upstream" log -1 --format=%an "$sha" | cut -d' ' -f1)
-  line="Co-authored-by: $name <$id+$login@users.noreply.github.com>"
-  case "$coauthors" in *"$line"*) ;; *) coauthors="$coauthors
-$line";; esac
-done
-
-git -C "$repo" commit -q -F - <<EOF
-Sync with $slug $(echo "$new" | cut -c1-8)
-$coauthors
-EOF
+git -C "$repo" commit -q -m "Sync with $slug $(echo "$new" | cut -c1-8)"
 git -C "$repo" log -1 --stat | cat
