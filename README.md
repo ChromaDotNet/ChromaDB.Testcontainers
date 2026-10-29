@@ -24,7 +24,7 @@ await chroma.StartAsync();
 var address = chroma.GetConnectionString();
 ```
 
-`GetBaseAddress()` returns the same address. `ChromaBuilder.ChromaHttpPort` is the API port inside the container, 8000.
+`GetBaseAddress()` returns the same address. `ChromaBuilder.ChromaPort` is the API port inside the container, 8000.
 
 With [ChromaDB.Client](https://github.com/ChromaDotNet/ChromaDB.Client), the `ChromaDotNet.Client` package:
 
@@ -61,4 +61,4 @@ Here the package is `ChromaDotNet.Testcontainers`.
 
 It is proposed to Testcontainers for .NET in [testcontainers/testcontainers-dotnet#1784](https://github.com/testcontainers/testcontainers-dotnet/pull/1784). This repository publishes it until Testcontainers for .NET ships `Testcontainers.Chroma`. Then this repository will be archived, and the package deprecated in favor of that one. The namespace and the API are the same, so moving changes only the package reference.
 
-Every change to the module goes first into that pull request. `eng/sync-from-upstream.sh` then copies `src/Testcontainers.Chroma`, `tests/Testcontainers.Chroma.Tests` and `docs/modules/chroma.md` here. The rest belongs to this repository, like the build files, the CI and `tests/Testcontainers.Chroma.ImageTests`.
+Every change to the module goes first into that pull request. `eng/sync-from-upstream.sh` then copies `src/Testcontainers.Chroma`, `tests/Testcontainers.Chroma.Tests` and `docs/modules/chroma.md` here. The rest belongs to this repository, like the build files, `src/Compat`, the CI and `tests/Testcontainers.Chroma.ImageTests`.
