@@ -10,6 +10,8 @@
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageIcon>icon.png</PackageIcon>
     <PackageProjectUrl>https://github.com/ChromaDotNet/ChromaDB.Testcontainers</PackageProjectUrl>
+    <!-- The notes link the GitHub release of the version, so they follow every release. -->
+    <PackageReleaseNotes>Release notes: $(PackageProjectUrl)/releases/tag/v$(VersionPrefix)</PackageReleaseNotes>
     <PackageTags>chroma;chromadb;docker;dotnet;testcontainers;testing;vector-database</PackageTags>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/ChromaDotNet/ChromaDB.Testcontainers</RepositoryUrl>
