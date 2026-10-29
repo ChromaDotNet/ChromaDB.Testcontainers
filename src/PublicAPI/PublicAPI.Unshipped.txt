@@ -1,0 +1,4 @@
+*REMOVED*Testcontainers.Chroma.ChromaBuilder.ChromaBuilder() -> void
+*REMOVED*const Testcontainers.Chroma.ChromaBuilder.ChromaHttpPort = 8000 -> ushort
+*REMOVED*const Testcontainers.Chroma.ChromaBuilder.ChromaImage = "chromadb/chroma:1.5.9" -> string
+const Testcontainers.Chroma.ChromaBuilder.ChromaPort = 8000 -> ushort

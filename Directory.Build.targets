@@ -12,5 +12,10 @@
     <PackageReference Include="Testcontainers"/>
     <!-- What the module calls and the package of Testcontainers doesn't have yet: see the files. -->
     <Compile Include="$(MSBuildThisFileDirectory)src/Compat/*.cs" LinkBase="Compat"/>
+    <!-- The public API, checked at build: PublicAPI.Shipped.txt is the API of the last release, PublicAPI.Unshipped.txt
+         what changed since. A sync that changes the API stops the build until the two files say so. -->
+    <PackageReference Include="Microsoft.CodeAnalysis.PublicApiAnalyzers" PrivateAssets="all"/>
+    <AdditionalFiles Include="$(MSBuildThisFileDirectory)src/PublicAPI/PublicAPI.Shipped.txt"/>
+    <AdditionalFiles Include="$(MSBuildThisFileDirectory)src/PublicAPI/PublicAPI.Unshipped.txt"/>
   </ItemGroup>
 </Project>

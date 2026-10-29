@@ -1,0 +1,16 @@
+Testcontainers.Chroma.ChromaBuilder
+Testcontainers.Chroma.ChromaBuilder.ChromaBuilder() -> void
+Testcontainers.Chroma.ChromaBuilder.ChromaBuilder(DotNet.Testcontainers.Images.IImage image) -> void
+Testcontainers.Chroma.ChromaBuilder.ChromaBuilder(string image) -> void
+Testcontainers.Chroma.ChromaConfiguration
+Testcontainers.Chroma.ChromaConfiguration.ChromaConfiguration() -> void
+Testcontainers.Chroma.ChromaConfiguration.ChromaConfiguration(DotNet.Testcontainers.Configurations.IContainerConfiguration resourceConfiguration) -> void
+Testcontainers.Chroma.ChromaConfiguration.ChromaConfiguration(DotNet.Testcontainers.Configurations.IResourceConfiguration<Docker.DotNet.Models.CreateContainerParameters> resourceConfiguration) -> void
+Testcontainers.Chroma.ChromaConfiguration.ChromaConfiguration(Testcontainers.Chroma.ChromaConfiguration oldValue, Testcontainers.Chroma.ChromaConfiguration newValue) -> void
+Testcontainers.Chroma.ChromaConfiguration.ChromaConfiguration(Testcontainers.Chroma.ChromaConfiguration resourceConfiguration) -> void
+Testcontainers.Chroma.ChromaContainer
+Testcontainers.Chroma.ChromaContainer.ChromaContainer(Testcontainers.Chroma.ChromaConfiguration configuration) -> void
+Testcontainers.Chroma.ChromaContainer.GetBaseAddress() -> string
+const Testcontainers.Chroma.ChromaBuilder.ChromaHttpPort = 8000 -> ushort
+const Testcontainers.Chroma.ChromaBuilder.ChromaImage = "chromadb/chroma:1.5.9" -> string
+override Testcontainers.Chroma.ChromaBuilder.Build() -> Testcontainers.Chroma.ChromaContainer
