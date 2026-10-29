@@ -19,6 +19,11 @@
   <PropertyGroup>
     <DebugType>embedded</DebugType>
   </PropertyGroup>
+  <!-- In GitHub Actions the build maps the source paths, so that the assemblies of the package are deterministic: the
+       same commit gives the same assemblies. -->
+  <PropertyGroup Condition=" '$(GITHUB_ACTIONS)' == 'true' ">
+    <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
+  </PropertyGroup>
   <PropertyGroup>
     <NoWarn>CA1859,CA1861,CS0618,CS1591,xUnit1044,xUnit1045</NoWarn>
   </PropertyGroup>
